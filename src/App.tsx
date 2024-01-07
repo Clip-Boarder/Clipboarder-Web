@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -45,7 +44,7 @@ function App() {
 		<>
 			<button onClick={handleClick}>테스트</button>
 			<div>테스트2</div>
-			<img src={src} />
+			<img src={src} alt="test" />
 		</>
 	);
 }
