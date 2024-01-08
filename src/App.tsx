@@ -42,7 +42,7 @@ function App() {
 	}, []);
 	return (
 		<>
-			<button onClick={handleClick}>테스트</button>
+			<button onClick={handleClick}>테스트2</button>
 			<div>테스트2</div>
 			<img src={src} alt="test" />
 		</>
