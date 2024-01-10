@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import styled from "styled-components";
 
 function App() {
-	const [src, setSrc] = useState<string>('');
+	const [src, setSrc] = useState<string>("");
+	const [copyText, setCopyText] = useState<string>("");
 	const handleClick = async () => {
 		const isTextClipBoardItem = await navigator.clipboard.readText();
 		if (isTextClipBoardItem) {
-			console.log(isTextClipBoardItem);
+			setCopyText(isTextClipBoardItem);
 		} else {
 			const clipboardItems = await navigator.clipboard.read();
 			for (const item of clipboardItems) {
-				if (!item.types.includes('image/png')) {
-					throw new Error('Clipboard contains non-image data.');
+				if (!item.types.includes("image/png")) {
+					throw new Error("Clipboard contains non-image data.");
 				} else {
-					const blob = await item.getType('image/png');
+					const blob = await item.getType("image/png");
 					setSrc(URL.createObjectURL(blob));
 				}
 			}
@@ -32,21 +34,32 @@ function App() {
 			const code = event.which || event.keyCode;
 
 			let charCode = String.fromCharCode(code).toLowerCase();
-			if ((event.ctrlKey || event.metaKey) && charCode === 'c') {
+			if ((event.ctrlKey || event.metaKey) && charCode === "c") {
 				handleClick();
 			}
 		};
-		window.addEventListener('keydown', handleKeyDown);
+		window.addEventListener("keydown", handleKeyDown);
 
-		return () => window.removeEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, []);
 	return (
-		<>
-			<button onClick={handleClick}>테스트2</button>
-			<div>테스트2</div>
+		<Wrapper>
+			<button onClick={handleClick}>테스트</button>
+			<div>{copyText}</div>
 			<img src={src} alt="test" />
-		</>
+		</Wrapper>
 	);
 }
 
 export default App;
+const Wrapper = styled.div`
+	width: 286px;
+	height: 380px;
+	background-color: #d9d9d9;
+	border-radius: 0 0 10px 10px;
+	border: 2px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+`;
