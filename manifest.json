@@ -6,11 +6,5 @@
 	"action": {
 		"default_popup": "index.html"
 	},
-	"permissions": [
-		"activeTab",
-		"https://*/*",
-		"http://*/*",
-		"clipboardRead",
-		"clipboardWrite"
-	]
+	"permissions": ["clipboardRead", "clipboardWrite"]
 }
