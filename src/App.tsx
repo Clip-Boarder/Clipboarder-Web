@@ -6,25 +6,36 @@ function App() {
 	const [src, setSrc] = useState<string>('');
 	const [copyText, setCopyText] = useState<string>('');
 	const [isCopied, setIsCopied] = useState(false);
+	const [testText, setTestText] = useState<string>('');
 
 	useEffect(() => {
+		chrome.runtime.sendMessage('message');
 		// 메시지 수신 리스너
-		const handleMessage = (
+		const handleMessage = async (
 			message: { copied: any },
 			sender: any,
 			sendResponse: any
 		) => {
 			if (message.copied) {
 				console.log('T');
+				const isTextClipBoardItem = await navigator.clipboard.readText();
+				if (isTextClipBoardItem) {
+					setCopyText(isTextClipBoardItem);
+				}
+
 				setIsCopied(true);
 			}
 		};
+		const timer = setTimeout(() => {
+			setTestText('테스트입니다.');
+		}, 3000);
 
 		// 리스너 등록
 		chrome.runtime.onMessage.addListener(handleMessage);
 
 		// 컴포넌트 언마운트 시 리스너 제거
 		return () => {
+			clearTimeout(timer);
 			chrome.runtime.onMessage.removeListener(handleMessage);
 		};
 	}, []);
@@ -53,6 +64,7 @@ function App() {
 			</div>
 			<button onClick={handleClick}>테스트</button>
 			<div>{copyText}</div>
+			<div className="test"></div>
 			<img src={src} alt="test" />
 		</Wrapper>
 	);

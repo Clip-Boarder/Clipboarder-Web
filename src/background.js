@@ -1,9 +1,14 @@
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-	if (request.type === 'COPY_EVENT') {
-		// Ctrl + C 이벤트 감지
-		// 여기서 React 앱으로 메시지를 보낼 수 있습니다.
-		chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-			chrome.tabs.sendMessage(tabs[0].id, { type: 'COPY_DETECTED' });
-		});
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+	if (message.ctrlCPressed) {
+		console.log('Ctrl + C was detected in content script');
+		// Perform actions in background.js based on this information
 	}
 });
+// chrome.commands.onCommand.addListener(async (command) => {
+// 	console.log(`Command: ${command}`);
+// 	// chrome.runtime.sendMessage({ copied: true });
+// });
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+// 	console.log(message);
+// });
+console.log('Test Background');

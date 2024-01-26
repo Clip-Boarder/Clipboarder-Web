@@ -6,11 +6,23 @@
 	"action": {
 		"default_popup": "index.html"
 	},
+	"commands": {
+		"copy": {
+			"suggested_key": {
+				"default": "Ctrl+C",
+				"mac": "Command+C"
+			},
+			"description": "copy~~"
+		}
+	},
 	"content_scripts": [
 		{
-			"matches": ["<all_urls>"],
+			"matches": ["*://*/*", "<all_urls>"],
 			"js": ["src/content.js"]
 		}
 	],
-	"permissions": ["clipboardRead", "clipboardWrite"]
+	"background": {
+		"service_worker": "src/background.js"
+	},
+	"permissions": ["clipboardRead", "clipboardWrite", "tabs", "activeTab"]
 }
