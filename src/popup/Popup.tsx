@@ -69,8 +69,8 @@ export default Popup
 
 const Wrapper = styled.div`
   position: relative;
-  width: 286px;
-  height: 380px;
+  width: 500px;
+  height: 400px;
   border: 4px solid black;
   display: flex;
   align-items: center;
