@@ -9,12 +9,32 @@ export const Popup = () => {
   const [isLogin, setIsLogin] = useState(true)
   const [count, setCount] = useState(0)
   const link = 'chrome-extension://pepblbdmofiohhhfmdhmngfdhjdmcnhc/options.html'
+  const [recentData, setRecentData] = useState(['사과', '바나나', '딸기', '포도'])
+  const [storedData, setStoredData] = useState([
+    '오렌지',
+    '수박',
+    '메론',
+    '복숭아',
+    '키위',
+    '망고',
+    '체리',
+    '블루베리',
+  ])
 
   const minus = () => {
     if (count > 0) setCount(count - 1)
   }
 
   const add = () => setCount(count + 1)
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      alert(`${text}이(가) 클립보드에 복사되었습니다.`)
+    } catch (err) {
+      console.error('클립보드 복사에 실패했습니다.', err)
+    }
+  }
 
   useEffect(() => {
     chrome.storage.sync.get(['count'], (result) => {
@@ -60,10 +80,11 @@ export const Popup = () => {
             <Recent.Title>Recently Used</Recent.Title>
             <SizedBox height={20} />
             <Recent.BoxContainer>
-              <Recent.Box>Item 1</Recent.Box>
-              <Recent.Box>Item 2</Recent.Box>
-              <Recent.Box>Item 3</Recent.Box>
-              <Recent.Box>Item 4</Recent.Box>
+              {recentData.map((item, index) => (
+                <Recent.Box key={index} onClick={() => copyToClipboard(item)}>
+                  {item}
+                </Recent.Box>
+              ))}
             </Recent.BoxContainer>
           </Recent.Wrapper>
           <SizedBox height={10} />
@@ -73,15 +94,11 @@ export const Popup = () => {
             <Stored.Title>Stored Data</Stored.Title>
             <SizedBox height={20} />
             <Stored.BoxContainer>
-              <Stored.Box>Item 1</Stored.Box>
-              <Stored.Box>Item 2</Stored.Box>
-              <Stored.Box>Item 3</Stored.Box>
-              <Stored.Box>Item 4</Stored.Box>
-              <Stored.Box>Item 3</Stored.Box>
-              <Stored.Box>Item 4</Stored.Box>
-              <Stored.Box>Item 4</Stored.Box>
-              <Stored.Box>Item 3</Stored.Box>
-              <Stored.Box>Item 4</Stored.Box>
+              {storedData.map((item, index) => (
+                <Stored.Box key={index} onClick={() => copyToClipboard(item)}>
+                  {item}
+                </Stored.Box>
+              ))}
             </Stored.BoxContainer>
           </Stored.Wrapper>
           {/* <div className="calc">
