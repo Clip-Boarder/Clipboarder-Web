@@ -11,7 +11,7 @@ interface Size {
 const Box = styled.div<Size>`
   width: ${(props) => (props.width ? `${props.width}px` : 'auto')};
   height: ${(props) => (props.height ? `${props.height}px` : 'auto')};
-  background-color: lightgray;
+  background-color: transparent;
 `
 
 // SizedBox 컴포넌트 정의
