@@ -21,3 +21,6 @@
 
 # secrets
 secrets.*.js
+
+# 환경변수
+.env

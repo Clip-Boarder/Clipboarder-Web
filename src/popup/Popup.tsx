@@ -70,9 +70,9 @@ export const Popup = () => {
             </LoginButtonText> */}
           </LoginButton>
           <SizedBox height={80} />
-          <Description>Clip-Boarder가 뭔가요?</Description>
+          <Description>ClipBoarder가 뭔가요?</Description>
           <SizedBox height={20} />
-          <DescriptionLink>Clip-Boarder 안내 보러가기</DescriptionLink>
+          <DescriptionLink>ClipBoarder 안내 보러가기</DescriptionLink>
         </NonLoginWrapper>
       ) : (
         <>
