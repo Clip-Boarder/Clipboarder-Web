@@ -6,9 +6,9 @@ import SizedBox from '../components/common/SizedBox'
 import FullLine from '../components/common/Line'
 
 export const Popup = () => {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(false)
   const [count, setCount] = useState(0)
-  const link = 'chrome-extension://pepblbdmofiohhhfmdhmngfdhjdmcnhc/options.html'
+  const link = `chrome-extension://${chrome.runtime.id}/options.html`
   const [recentData, setRecentData] = useState(['사과', '바나나', '딸기', '포도'])
   const [storedData, setStoredData] = useState([
     '오렌지',
@@ -58,16 +58,16 @@ export const Popup = () => {
           <Description>지금 바로 시작해보세요</Description>
           <SizedBox height={20} />
           <LoginButton>
-            {/* <LoginButtonText href={link} target="_blank" rel="noopener noreferrer">
+            <LoginButtonText href={link} target="_blank" rel="noopener noreferrer">
               로그인 하러 가기
-            </LoginButtonText> */}
-            <LoginButtonText
+            </LoginButtonText>
+            {/* <LoginButtonText
               onClick={() => setIsLogin(true)}
               target="_blank"
               rel="noopener noreferrer"
             >
               로그인 하러 가기
-            </LoginButtonText>
+            </LoginButtonText> */}
           </LoginButton>
           <SizedBox height={80} />
           <Description>Clip-Boarder가 뭔가요?</Description>
