@@ -17,10 +17,8 @@ export const Options = () => {
         setCountSync(request.count || 0)
       }
     })
-    console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID)
   }, [])
   const REDIRECT_URL = chrome.identity.getRedirectURL()
-  console.log(REDIRECT_URL)
   const handleLogin = () => {
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${import.meta.env.VITE_GOOGLE_CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=token&scope=email profile`
 
@@ -30,22 +28,19 @@ export const Options = () => {
         interactive: true,
       },
       (redirectUrl) => {
-        // 인증 과정이 성공적으로 완료되면 redirectUrl에서 액세스 토큰을 추출
         if (chrome.runtime.lastError || !redirectUrl) {
           console.log('인증에 실패했습니다.')
           return
         }
-        // redirectUrl에서 액세스 토큰을 파싱하는 로직 추가
         const url = new URL(redirectUrl)
         const accessToken = url.hash
-          .substring(1) // URL 해시의 첫 번째 문자인 '#'을 제거합니다.
+          .substring(1)
           .split('&')
           .find((param) => param.startsWith('access_token'))
-          ?.split('=')[1] // 옵셔널 체이닝 연산자를 사용하여 undefined 체크
+          ?.split('=')[1]
 
         if (accessToken) {
           console.log('Access Token:', accessToken)
-          // 여기에서 accessToken을 사용하는 로직을 추가하세요.
         } else {
           console.log('Access Token을 찾을 수 없습니다.')
         }
