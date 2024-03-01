@@ -6,7 +6,7 @@ import SizedBox from '../components/common/SizedBox'
 import FullLine from '../components/common/Line'
 
 export const Popup = () => {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(false)
   const [count, setCount] = useState(0)
   const link = `chrome-extension://${chrome.runtime.id}/options.html`
   const [recentData, setRecentData] = useState(['사과', '바나나', '딸기', '포도'])

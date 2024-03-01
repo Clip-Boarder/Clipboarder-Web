@@ -5,6 +5,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     const readText = (): Promise<string> => {
       return new Promise((resolve, reject) => {
         const el = document.createElement('textarea')
+        el.style.position = 'fixed'
+        el.style.top = '0'
+        el.style.left = '-9999px' // 화면 왼쪽 밖으로 배치
         el.value = 'before paste'
         document.body.appendChild(el)
 
