@@ -12,8 +12,7 @@ console.log('background is running')
 // }
 
 // setInterval(readClipboardText, 5000)
-// background.js// background.js
-let lastClipboardContent = '' // 마지막 클립보드 내용을 저장할 변수
+let lastClipboardContent = ''
 
 function requestClipboardContent() {
   chrome.tabs.query({}, function (tabs) {
@@ -24,10 +23,9 @@ function requestClipboardContent() {
           return
         }
         if (response && response.success) {
-          // 새로운 클립보드 내용이 이전 내용과 다를 때만 로그를 출력합니다.
           if (response.text !== lastClipboardContent) {
             console.log('Received clipboard content:', response.text)
-            lastClipboardContent = response.text // 마지막 클립보드 내용을 업데이트합니다.\
+            lastClipboardContent = response.text
 
             // TODO
             // 여기다가 텍스트 저장하는 API 호출하면 됨.

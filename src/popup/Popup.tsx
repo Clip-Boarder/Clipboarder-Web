@@ -52,6 +52,10 @@ export const Popup = () => {
     }
   }
 
+  useEffect(() => {
+    // TODO
+    // 데이터를 가져와서 세팅하는 함수
+  }, [])
   return (
     <Wrapper>
       <ClipBox />
