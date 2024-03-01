@@ -1,8 +1,6 @@
 console.info('contentScript is running')
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  // TODO
-  // 이미지 데이터 복사하기 추가
   if (request.action === 'readClipboard') {
     const readText = (): Promise<string> => {
       return new Promise((resolve, reject) => {
