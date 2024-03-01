@@ -52,6 +52,8 @@
   ],
   "permissions": [
     "storage",
-    "identity"
+    "identity",
+    "clipboardRead",
+    "clipboardWrite"
   ]
 }

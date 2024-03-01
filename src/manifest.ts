@@ -37,5 +37,5 @@ export default defineManifest({
       matches: [],
     },
   ],
-  permissions: ['storage', 'identity'],
+  permissions: ['storage', 'identity', 'clipboardRead', 'clipboardWrite'],
 })
