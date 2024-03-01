@@ -6,7 +6,7 @@ import SizedBox from '../components/common/SizedBox'
 import FullLine from '../components/common/Line'
 
 export const Popup = () => {
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
   const [count, setCount] = useState(0)
   const link = `chrome-extension://${chrome.runtime.id}/options.html`
   const [recentData, setRecentData] = useState(['사과', '바나나', '딸기', '포도'])
@@ -20,32 +20,37 @@ export const Popup = () => {
     '체리',
     '블루베리',
   ])
+  // recentData를 업데이트하는 함수
+  const updateRecentData = (newItem: any) => {
+    setRecentData((prevRecentData) => {
+      const existingIndex = prevRecentData.findIndex((item) => item === newItem)
 
-  const minus = () => {
-    if (count > 0) setCount(count - 1)
+      let updatedRecentData = []
+      if (existingIndex !== -1) {
+        updatedRecentData = [
+          newItem,
+          ...prevRecentData.slice(0, existingIndex),
+          ...prevRecentData.slice(existingIndex + 1),
+        ]
+      } else {
+        // 새 항목을 배열의 맨 앞에 추가합니다.
+        updatedRecentData = [newItem, ...prevRecentData]
+      }
+
+      return updatedRecentData.slice(0, 4)
+    })
   }
-
-  const add = () => setCount(count + 1)
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
-      alert(`${text}이(가) 클립보드에 복사되었습니다.`)
+      updateRecentData(text)
+
+      chrome.runtime.sendMessage({ type: 'NEW_CLIPBOARD_CONTENT', content: text })
     } catch (err) {
       console.error('클립보드 복사에 실패했습니다.', err)
     }
   }
-
-  useEffect(() => {
-    chrome.storage.sync.get(['count'], (result) => {
-      setCount(result.count || 0)
-    })
-  }, [])
-
-  useEffect(() => {
-    chrome.storage.sync.set({ count })
-    chrome.runtime.sendMessage({ type: 'COUNT', count })
-  }, [count])
 
   return (
     <Wrapper>
