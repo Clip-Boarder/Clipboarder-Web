@@ -16,13 +16,15 @@ let lastClipboardContent = ''
 
 function requestClipboardContent() {
   chrome.tabs.query({}, function (tabs) {
-    if (tabs.length > 0 && tabs[0].id) {
-      chrome.tabs.sendMessage(tabs[0].id, { action: 'readClipboard' }, function (response) {
+    console.log(tabs)
+    if (tabs.length > 0 && tabs[1].id) {
+      chrome.tabs.sendMessage(tabs[1].id, { action: 'readClipboard' }, function (response) {
         if (chrome.runtime.lastError) {
           console.error('Error sending message to content script:', chrome.runtime.lastError)
           return
         }
         if (response && response.success) {
+          console.log(response)
           if (response.text !== lastClipboardContent) {
             console.log('Received clipboard content:', response.text)
             lastClipboardContent = response.text
@@ -38,4 +40,4 @@ function requestClipboardContent() {
   })
 }
 
-setInterval(requestClipboardContent, 1000)
+setInterval(requestClipboardContent, 3000)

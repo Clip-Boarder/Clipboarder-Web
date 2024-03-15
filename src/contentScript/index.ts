@@ -4,16 +4,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'readClipboard') {
     const readText = (): Promise<string> => {
       return new Promise((resolve, reject) => {
-        const el = document.createElement('textarea')
+        const el = document.createElement('input')
         el.style.position = 'fixed'
         el.style.top = '0'
-        el.style.left = '-9999px' // 화면 왼쪽 밖으로 배치
-        el.value = 'before paste'
+        el.style.left = '-9999px'
+        el.value = ''
         document.body.appendChild(el)
-
-        el.select()
+        el.focus()
         const success = document.execCommand('paste')
-
         const text = el.value
         document.body.removeChild(el)
 
