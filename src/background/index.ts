@@ -1,4 +1,3 @@
-console.log('background is running')
 // let count = 0
 // async function readClipboardText() {
 //   try {
@@ -15,29 +14,27 @@ console.log('background is running')
 let lastClipboardContent = ''
 
 function requestClipboardContent() {
-  chrome.tabs.query({}, function (tabs) {
-    console.log(tabs)
-    if (tabs.length > 0 && tabs[1].id) {
-      chrome.tabs.sendMessage(tabs[1].id, { action: 'readClipboard' }, function (response) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    if (tabs.length > 0 && tabs[0].id) {
+      chrome.tabs.sendMessage(tabs[0].id, { action: 'readClipboard' }, function (response) {
         if (chrome.runtime.lastError) {
-          console.error('Error sending message to content script:', chrome.runtime.lastError)
+          console.error(chrome.runtime.lastError)
           return
         }
         if (response && response.success) {
-          console.log(response)
           if (response.text !== lastClipboardContent) {
-            console.log('Received clipboard content:', response.text)
+            console.log(response.text)
             lastClipboardContent = response.text
 
             // TODO
-            // 여기다가 텍스트 저장하는 API 호출하면 됨.
+            // 여기에 텍스트 저장하는 API 호출 코드 추가해야함
           }
         } else {
-          console.error('Failed to read clipboard content:', response?.error)
+          console.error(response?.error)
         }
       })
     }
   })
 }
 
-setInterval(requestClipboardContent, 3000)
+setInterval(requestClipboardContent, 1000)
